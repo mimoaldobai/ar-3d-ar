@@ -3,91 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض نموذج ثلاثي الأبعاد في الواقع المعزز</title>
-    
-    <!-- استيراد مكتبة model-viewer -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <title>تجربة النظارات بالواقع المعزز</title>
 
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #111;
-            margin: 0;
-            flex-direction: column;
-        }
-        model-viewer {
-            width: 100%;
-            height: 80vh;
-            background-color: #222;
-            border-radius: 10px;
-        }
-        .ar-button {
-            background-color: #00aaff;
-            color: white;
-            font-size: 18px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-    </style>
+    <!-- استدعاء المكاتب من الإنترنت -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- عنصر model-viewer لعرض النموذج في الواقع المعزز -->
-    <model-viewer 
-        id="modelViewer"
-        alt="بدلة الفضاء لنيل آرمسترونغ"
-        src="./model-1742165642942.gbl"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        environment-image="neutral"
-        poster="./chair5.jpg"
-        shadow-intensity="1"
-        camera-controls
-        touch-action="pan-y">
-    </model-viewer>
+    <h1>جرب النظارات بالواقع المعزز!</h1>
 
-    <!-- زر لتشغيل الواقع المعزز فقط على الأجهزة التي تدعمه -->
-    <button id="arButton" class="ar-button" style="display: none;">عرض في الواقع المعزز</button>
+    <video id="video" autoplay playsinline></video>
 
-    <script>
-        const modelViewer = document.getElementById("modelViewer");
-        const arButton = document.getElementById("arButton");
+    <div class="buttons">
+        <button onclick="changeGlasses()">تغيير النظارات</button>
+    </div>
 
-        // التحقق مما إذا كان الجهاز يدعم الواقع المعزز
-        modelViewer.addEventListener("ar-status", (event) => {
-            if (event.detail.status === "failed") {
-                arButton.style.display = "none";
-            } else if (event.detail.status === "ready") {
-                arButton.style.display = "block";
-            }
-        });
+    <a-scene embedded arjs>
+        <a-camera position="0 1.6 0"></a-camera>
+        <a-assets>
+            <a-asset-item id="glassesModel1" src="glasses1.glb"></a-asset-item>
+            <a-asset-item id="glassesModel2" src="glasses2.glb"></a-asset-item>
+        </a-assets>
 
-        // تشغيل الواقع المعزز عند الضغط على الزر (للهواتف فقط)
-        arButton.addEventListener("click", () => {
-            if (modelViewer.canActivateAR) {
-                modelViewer.activateAR();
-            } else {
-                alert("جهازك لا يدعم الواقع المعزز!");
-            }
-        });
+        <!-- نموذج النظارات -->
+        <a-entity id="glasses" gltf-model="#glassesModel1" position="0 1.7 -2" scale="1 1 1"></a-entity>
+    </a-scene>
 
-        // إخفاء زر الواقع المعزز عند استخدام اللابتوب
-        if (window.innerWidth > 768) {
-            arButton.style.display = "none";
-        }
-
-        // إظهار التفاعل مع الماوس على اللابتوب
-        if (window.innerWidth <= 768) {
-            modelViewer.setAttribute("camera-controls", true);  // تفعيل التفاعل عبر الماوس
-        }
-
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
