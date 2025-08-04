@@ -40,17 +40,20 @@
 
     <!-- عنصر model-viewer لعرض النموذج في الواقع المعزز -->
     <model-viewer 
-        id="modelViewer"
-        alt="بدلة الفضاء لنيل آرمسترونغ"
-        src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
-        environment-image="neutral"
-        poster="./chair.jpg"
-        shadow-intensity="1"
-        camera-controls
-        touch-action="pan-y">
-    </model-viewer>
+  id="modelViewer"
+  alt="نموذج روبوت"
+  src="https://modelviewer.dev/shared-assets/models/RobotExpressive.glb"
+  poster="https://modelviewer.dev/shared-assets/models/RobotExpressive.webp"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  environment-image="neutral"
+  shadow-intensity="1"
+  camera-controls
+  touch-action="pan-y"
+  loading="lazy"
+  reveal="interaction">
+</model-viewer>
+
 
     <!-- زر لتشغيل الواقع المعزز فقط على الأجهزة التي تدعمه -->
     <button id="arButton" class="ar-button" style="display: none;">عرض في الواقع المعزز</button>
@@ -91,3 +94,4 @@
 
 </body>
 </html>
+
